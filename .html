@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Net Zero Build - Investor Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral with Green Accent -->
+    <!-- Application Structure Plan: The SPA is now structured as a tab-based, single-page "slide deck" application. A sticky navigation header acts as the slide selector. Only one content section (slide) is visible at a time, controlled by JavaScript. This structure mirrors a traditional presentation format, guiding the investor through a specific narrative flow: Snapshot -> Problem -> Market -> Solution -> Competition -> Traction -> The Ask. This is a more direct and controlled user experience compared to the previous open-dashboard format, aligning with the request for a slide-by-slide presentation. -->
+    <!-- Visualization & Content Choices: 
+        - All previous visualization choices (Bar, Line, Donut charts, HTML/JS timeline) are retained but redistributed across the new slide structure to support the focused narrative of each section.
+        - The primary change is structural: content is chunked into distinct, hidden divs, and navigation now toggles their visibility rather than scrolling. This makes the user journey more linear and deliberate. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #1a202c;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .kpi-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            padding-bottom: 8px;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active {
+            color: #047857;
+            border-bottom-color: #047857;
+        }
+        .page-content {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-800">Net Zero <span class="text-emerald-700">Build</span></h1>
+            <div class="hidden md:flex space-x-6 text-sm">
+                <a href="#" class="nav-link active" data-target="snapshot">Snapshot</a>
+                <a href="#" class="nav-link" data-target="certification">The Mandate</a>
+                <a href="#" class="nav-link" data-target="market">Market & GTM</a>
+                <a href="#" class="nav-link" data-target="model">Business Model</a>
+                <a href="#" class="nav-link" data-target="competition">Competition</a>
+                <a href="#" class="nav-link" data-target="traction">Traction</a>
+                <a href="#" class="nav-link" data-target="ask">The Ask</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <!-- Slide 1: Company Snapshot -->
+        <section id="snapshot" class="page-content">
+            <h2 class="text-3xl font-bold text-center mb-10">Company Snapshot</h2>
+            <div class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
+                <div class="bg-white p-8 rounded-xl border space-y-6">
+                    <h3 class="text-xl font-bold text-emerald-700">Profile</h3>
+                    <p class="text-gray-700">Net Zero Build is a PIF PropTech competition-winning startup building the AI-native sustainability compliance OS for the $700B+ global green building industry. The platform replaces manual, Excel-driven certification workflows with a real-time solution for developers, consultants, and contractors.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl border space-y-6">
+                    <h3 class="text-xl font-bold text-emerald-700">The Ask</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li><strong>Ask:</strong> $1,000,000</li>
+                        <li><strong>Stage:</strong> Early Seed (SAFE/Equity)</li>
+                        <li><strong>Valuation:</strong> $9,000,000 pre-money</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-xl border md:col-span-2 grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-emerald-700 mb-4">Traction</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li>$1.1M paid Proof-of-Concept with NEOM</li>
+                            <li>Active pipeline with Diriyah, Misk City, Red Sea Global, NHC</li>
+                            <li>Winner, Global TONOMUS/PIF PropTech Competition</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-emerald-700 mb-4">Investment Thesis</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                           <li><strong>First-Mover Advantage:</strong> A validated, AI-native platform in a market dominated by manual processes.</li>
+                           <li><strong>Mandate-Driven Market:</strong> Saudi-first strategy embedded in Vision 2030 giga-projects with regulatory tailwinds.</li>
+                           <li><strong>Scalable Model:</strong> Dual-product approach targeting both developers and consultants.</li>
+                           <li><strong>Clear Path to Growth:</strong> A defined strategy to achieve $100M ARR.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: Green Building Certification -->
+        <section id="certification" class="page-content hidden">
+            <h2 class="text-3xl font-bold text-center mb-4">What is Green Building Certification?</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Green building certification provides third-party assurance that projects meet critical sustainability standards. Vision 2030 has made this a national priority, creating a significant market opportunity.</p>
+            <div class="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <div class="bg-white p-8 rounded-xl border border-gray-200">
+                    <h4 class="text-2xl font-bold text-gray-800">The Catalyst: Vision 2030</h4>
+                    <p class="mt-2 text-gray-600">Green building certification is now essential for real estate worldwide, ensuring sustainability, efficiency, and long-term asset value. In Saudi Arabia, Vision 2030 and the Saudi Green Initiative make certification a regulatory requirement across giga-projects and public developments. Mostadam, the Kingdom’s national framework, anchors this shift, creating surging demand for efficient compliance solutions as projects like NEOM, Diriyah, and Roshn embed green standards into every asset.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl border border-gray-200">
+                    <h4 class="text-2xl font-bold text-gray-800">The Cost Burden</h4>
+                    <p class="mt-2 text-gray-600">Manual certification adds <span class="font-bold text-emerald-700">$60,000 to over $700,000 per project</span> in fees and consultant hours. Net Zero Build's platform directly targets these inefficiencies, unlocking significant cost savings for clients.</p>
+                </div>
+            </div>
+            <div class="max-w-6xl mx-auto mt-12 bg-white p-8 rounded-xl border border-emerald-200">
+                 <h4 class="text-2xl font-bold text-gray-800 mb-4">Giga-Projects Use-Case: NEOM PoC</h4>
+                 <div class="space-y-4 text-gray-600">
+                    <p>Embed the AI core into the client’s sustainability procedures and plan of work to automate multi-standard certification (e.g., LEED/WELL/Envision) across masterplans, infrastructure, and buildings, with live compliance tracking and automated documentation checks.</p>
+                    <p>Deliver portfolio dashboards and real-time validation to streamline governance and green-finance/investor reporting across business units and projects.</p>
+                    <p><strong class="text-gray-700">Impact:</strong> ~60% admin-effort reduction and ~40% certification-related CapEx reduction; ~$200k–$400k savings per certification and ~$60–$120M across ~300 certifications over three years.</p>
+                    <p><strong class="text-gray-700">Commercials:</strong> 12-month PoC budget SAR 4M, with a pathway to multi-year rollout upon successful pilot.</p>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Market & GTM -->
+        <section id="market" class="page-content hidden">
+             <h2 class="text-3xl font-bold text-center mb-4">Market & Go-To-Market Strategy</h2>
+             <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">The company is positioned to capture a significant share of a rapidly expanding multi-billion dollar market, leveraging a phased strategy that begins with Saudi Arabia's giga-projects.</p>
+             <div class="grid md:grid-cols-5 gap-8 items-center max-w-6xl mx-auto mb-12">
+                <div class="md:col-span-3">
+                    <div class="chart-container">
+                        <canvas id="marketChart"></canvas>
+                    </div>
+                </div>
+                <div class="md:col-span-2">
+                    <h4 class="text-xl font-bold text-gray-800 mb-4">Market Sizing</h4>
+                     <ul class="space-y-2 text-sm">
+                        <li><strong>GCC TAM:</strong> $15B</li>
+                        <li><strong>Saudi SAM:</strong> $2B</li>
+                        <li><strong>Saudi SOM:</strong> $1.2B (from giga-projects)</li>
+                    </ul>
+                    <p class="mt-4 text-xs text-gray-500">Saudi certifications are projected to grow 4x by 2030.</p>
+                </div>
+            </div>
+            <div id="gtm-timeline" class="max-w-6xl mx-auto">
+                <h4 class="text-2xl font-bold text-center mb-6">Phased Go-To-Market Plan</h4>
+                <div class="flex justify-center space-x-2 md:space-x-4">
+                    <button data-phase="crawl" class="timeline-btn p-3 px-4 text-sm font-semibold rounded-full bg-emerald-700 text-white">2025: Crawl</button>
+                    <button data-phase="walk" class="timeline-btn p-3 px-4 text-sm font-semibold rounded-full bg-white text-gray-700 border">2026: Walk</button>
+                    <button data-phase="run" class="timeline-btn p-3 px-4 text-sm font-semibold rounded-full bg-white text-gray-700 border">2027-28: Run</button>
+                    <button data-phase="fly" class="timeline-btn p-3 px-4 text-sm font-semibold rounded-full bg-white text-gray-700 border">2029+: Fly</button>
+                </div>
+                <div class="mt-6">
+                    <div id="crawl-content" class="timeline-content p-6 bg-white rounded-lg border text-center"><h5 class="font-bold text-lg text-emerald-700">Giga-project PoCs & ROI Validation</h5></div>
+                    <div id="walk-content" class="timeline-content p-6 bg-white rounded-lg border text-center hidden"><h5 class="font-bold text-lg text-emerald-700">SaaS Rollout (Compliance + Project Mgmt.)</h5></div>
+                    <div id="run-content" class="timeline-content p-6 bg-white rounded-lg border text-center hidden"><h5 class="font-bold text-lg text-emerald-700">AI Consultants for Real-time Certification</h5></div>
+                    <div id="fly-content" class="timeline-content p-6 bg-white rounded-lg border text-center hidden"><h5 class="font-bold text-lg text-emerald-700">Proprietary AI-native Certification System</h5></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Business Model -->
+        <section id="model" class="page-content hidden">
+            <h2 class="text-3xl font-bold text-center mb-4">Business Model & Revenue Streams</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">The company employs a dual-product SaaS model targeting the two key stakeholders in the certification process, creating diverse and recurring revenue streams.</p>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="kpi-card text-left">
+                    <h5 class="font-bold text-lg text-gray-800">Developers & Investors</h5>
+                    <p class="text-sm text-gray-500 mb-4">Compliance Monitoring Platform</p>
+                    <p class="text-3xl font-bold text-emerald-700">$700 - $1,200 <span class="text-lg font-medium text-gray-600">/ project / month</span></p>
+                    <ul class="text-sm mt-4 space-y-2 text-gray-600">
+                        <li><strong>ACV:</strong> $8K - $18K</li>
+                        <li><strong>LTV:</strong> $25K - $108K per project</li>
+                    </ul>
+                </div>
+                <div class="kpi-card text-left">
+                    <h5 class="font-bold text-lg text-gray-800">Consultants & Contractors</h5>
+                    <p class="text-sm text-gray-500 mb-4">Project Management Platform</p>
+                    <p class="text-3xl font-bold text-emerald-700">$500 - $1,000 <span class="text-lg font-medium text-gray-600">/ user / month</span></p>
+                     <ul class="text-sm mt-4 space-y-2 text-gray-600">
+                        <li><strong>ACV:</strong> $60K - $180K per firm (10-30 users)</li>
+                    </ul>
+                </div>
+            </div>
+             <p class="text-center text-gray-600 max-w-2xl mx-auto mt-10"><strong>Recurring Revenue Drivers:</strong> Multi-certification needs (LEED + WELL + Mostadam) and mandatory re-certifications every 3–5 years ensure long-term customer value.</p>
+        </section>
+
+        <!-- Slide 5: Competitive Landscape -->
+        <section id="competition" class="page-content hidden">
+            <h2 class="text-3xl font-bold text-center mb-4">Competitive Landscape</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Net Zero Build enters a market where the primary competition is inertia—outdated software and manual processes. Its AI-native approach provides a distinct, defensible advantage.</p>
+            <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg border">
+                 <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="p-4 font-bold text-emerald-700">Competitor</th>
+                            <th class="p-4 font-bold text-emerald-700">Weakness</th>
+                            <th class="p-4 font-bold text-emerald-700">NZB Edge</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-4 font-semibold">IES TaP (UK)</td>
+                            <td class="p-4 text-gray-600">Outdated, no AI</td>
+                            <td class="p-4 text-gray-600">AI-native, dynamic, multi-certification</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-4 font-semibold">Kvist (Norway)</td>
+                            <td class="p-4 text-gray-600">Single market scope</td>
+                            <td class="p-4 text-gray-600">Global multi-certification</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold">Measurabl (US)</td>
+                            <td class="p-4 text-gray-600">Only existing buildings</td>
+                            <td class="p-4 text-gray-600">Covers new + existing buildings</td>
+                        </tr>
+                    </tbody>
+                 </table>
+            </div>
+            <p class="text-center font-bold text-lg text-gray-800 max-w-2xl mx-auto mt-10">95% of projects still run on Excel → NZB is the first AI-native platform.</p>
+        </section>
+
+        <!-- Slide 6: Traction & Key Metrics -->
+        <section id="traction" class="page-content hidden">
+             <h2 class="text-3xl font-bold text-center mb-4">Traction & Key Metrics</h2>
+             <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">The company has achieved significant commercial validation and demonstrates a lean operational model with a clear path to significant recurring revenue.</p>
+             <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
+                 <div>
+                    <h4 class="text-2xl font-bold text-gray-800 mb-4">Key Achievements</h4>
+                    <ul class="space-y-4">
+                        <li class="bg-white p-4 rounded-lg border border-emerald-300 flex items-start space-x-3">
+                            <span class="text-emerald-600 font-bold text-lg">✓</span>
+                            <div><span class="font-bold">$1.1M Paid PoC</span> with NEOM secured.</div>
+                        </li>
+                        <li class="bg-white p-4 rounded-lg border border-gray-200 flex items-start space-x-3">
+                           <span class="text-emerald-600 font-bold text-lg">✓</span>
+                           <div><span class="font-bold">Strong Pipeline:</span> Diriyah, Red Sea, Roshn, Misk City, NHC.</div>
+                        </li>
+                        <li class="bg-white p-4 rounded-lg border border-gray-200 flex items-start space-x-3">
+                            <span class="text-emerald-600 font-bold text-lg">✓</span>
+                            <div><span class="font-bold">$350K Raised</span> to date (incl. $100K non-dilutive grants).</div>
+                        </li>
+                    </ul>
+                     <div class="mt-6 grid grid-cols-2 gap-4">
+                         <div class="bg-gray-50 p-4 rounded-lg text-center">
+                            <p class="text-sm text-gray-500">Burn (Q2 2025)</p>
+                            <p class="font-bold text-xl text-gray-700">$25K/month</p>
+                         </div>
+                         <div class="bg-gray-50 p-4 rounded-lg text-center">
+                            <p class="text-sm text-gray-500">Projected Burn (Q4 2025)</p>
+                            <p class="font-bold text-xl text-gray-700">$40K/month</p>
+                         </div>
+                     </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="arrChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Use of Funds & Cap Table -->
+        <section id="ask" class="page-content hidden">
+            <h2 class="text-3xl font-bold text-center mb-4">Use of Funds & Cap Table</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">This $1M raise is designed to strategically accelerate product development and commercial rollout across the GCC, building on current momentum.</p>
+            <div class="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <div class="bg-white p-8 rounded-xl border h-full">
+                    <h4 class="text-2xl font-bold text-gray-800 mb-4">Use of Funds</h4>
+                    <ul class="list-disc list-inside space-y-4 text-gray-700">
+                        <li>Product scaling & AI R&D</li>
+                        <li>Regional BD & sales team (GCC rollout)</li>
+                        <li>Core team expansion</li>
+                    </ul>
+                </div>
+                <div>
+                     <h4 class="text-2xl font-bold text-gray-800 mb-4">Capitalization (Current, Pre-Seed)</h4>
+                     <div class="bg-white p-6 rounded-lg border border-gray-200 space-y-4 text-sm">
+                        <div>
+                            <h5 class="font-semibold text-gray-700 mb-2">Founders & Advisor (Ordinary Shares)</h5>
+                            <ul class="space-y-1 text-gray-600">
+                                <li class="flex justify-between"><span>Kristijan Jordanov (Founder)</span> <span>87.47%</span></li>
+                                <li class="flex justify-between"><span>Ludvig Klasman (Founder)</span> <span>12.50%</span></li>
+                                <li class="flex justify-between"><span>Sebastian Bond (Advisor)</span> <span>0.50%</span></li>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div>
+                            <h5 class="font-semibold text-gray-700 mb-2">SAFE & Warrants (Not Yet Exercised)</h5>
+                            <ul class="space-y-1 text-gray-600">
+                                <li class="flex justify-between"><span>Norrsken Stockholm (SAFE)</span> <span>~5.42%</span></li>
+                                <li class="flex justify-between"><span>TONOMUS (Warrant)</span> <span>~9.99%</span></li>
+                            </ul>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="container mx-auto px-6 py-6 text-center text-gray-500 text-sm">
+            <p class="font-bold text-gray-700">Net Zero Build</p>
+        </div>
+    </footer>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pages = document.querySelectorAll('.page-content');
+    let marketChart, arrChart;
+
+    const chartColors = {
+        primary: 'rgba(4, 120, 87, 0.8)',
+        primaryBg: 'rgba(4, 120, 87, 0.2)',
+        secondary: 'rgba(5, 150, 105, 0.8)',
+        accent: 'rgba(16, 185, 129, 0.8)',
+        grey: 'rgba(107, 114, 128, 0.8)'
+    };
+
+    function initMarketChart() {
+        if (marketChart) marketChart.destroy();
+        const marketData = {
+            labels: ['GCC TAM', 'Saudi SAM', 'Saudi SOM (Giga-Projects)'],
+            datasets: [{ label: 'Market Size ($B)', data: [15, 2, 1.2], backgroundColor: [chartColors.accent, chartColors.secondary, chartColors.primary], borderWidth: 0 }]
+        };
+        const ctx = document.getElementById('marketChart').getContext('2d');
+        marketChart = new Chart(ctx, {
+            type: 'bar', data: marketData,
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, title: { display: true, text: 'Market Opportunity (2025, in Billions)', font: { size: 16 } }, tooltip: { callbacks: { label: (c) => `$${c.raw} Billion` } } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'USD ($B)' } } } }
+        });
+    }
+
+    function initArrChart() {
+        if (arrChart) arrChart.destroy();
+        const arrData = {
+            labels: ['Q3 25', 'Q4 25', 'Q1 26', 'Q2 26', 'Q3 26', 'Q4 26'],
+            datasets: [{ label: 'Projected ARR', data: [0, 0.1, 0.5, 1.2, 1.6, 2.0], fill: true, borderColor: chartColors.primary, backgroundColor: chartColors.primaryBg, tension: 0.4 }]
+        };
+        const ctx = document.getElementById('arrChart').getContext('2d');
+        arrChart = new Chart(ctx, {
+            type: 'line', data: arrData,
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, title: { display: true, text: 'Projected ARR to $2M by 2026', font: { size: 16 } }, tooltip: { callbacks: { label: (c) => `ARR: $${c.raw} Million` } } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Annual Recurring Revenue ($M)' } } } }
+        });
+    }
+
+    function showPage(targetId) {
+        pages.forEach(page => {
+            if (page.id === targetId) {
+                page.classList.remove('hidden');
+                if (targetId === 'market') initMarketChart();
+                if (targetId === 'traction') initArrChart();
+            } else {
+                page.classList.add('hidden');
+            }
+        });
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            const targetId = link.getAttribute('data-target');
+            showPage(targetId);
+        });
+    });
+
+    const timelineBtns = document.querySelectorAll('.timeline-btn');
+    const timelineContents = document.querySelectorAll('.timeline-content');
+    timelineBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const phase = btn.dataset.phase;
+            timelineBtns.forEach(b => {
+                b.classList.remove('bg-emerald-700', 'text-white');
+                b.classList.add('bg-white', 'text-gray-700');
+            });
+            btn.classList.add('bg-emerald-700', 'text-white');
+            btn.classList.remove('bg-white', 'text-gray-700');
+            timelineContents.forEach(content => {
+                if (content.id === `${phase}-content`) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        });
+    });
+});
+</script>
+</body>
+</html>
+
+
